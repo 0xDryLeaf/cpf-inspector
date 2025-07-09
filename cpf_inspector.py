@@ -1,8 +1,15 @@
 import argparse
 import csv
 import os
-import colorama
-colorama.init()
+try:
+    import colorama
+    colorama.init()
+except ModuleNotFoundError:  # pragma: no cover - fallback for minimal envs
+    class _Color:
+        def __getattr__(self, item):
+            return ""
+
+    colorama = type("colorama", (), {"Fore": _Color(), "Style": _Color()})()
 versao_atual = "v1.2.1"
 
 def banner():
@@ -24,8 +31,10 @@ def calcular_digitos_verificadores(cpf):
     resto_1 = soma_1 % 11
     digito_verif_1 = 0 if resto_1 < 2 else 11 - resto_1
 
-    # Soma ponderada dos 10 primeiros dígitos (incluindo o primeiro dígito verificador)
-    soma_2 = sum(int(cpf_numerico[i]) * pesos_2[i] for i in range(10))
+    # Usa o primeiro dígito calculado para gerar a base do segundo cálculo
+    base_para_digito_2 = cpf_numerico[:9] + str(digito_verif_1)
+    # Soma ponderada dos 10 primeiros dígitos (9 originais + primeiro verificador gerado)
+    soma_2 = sum(int(base_para_digito_2[i]) * pesos_2[i] for i in range(10))
     resto_2 = soma_2 % 11
     digito_verif_2 = 0 if resto_2 < 2 else 11 - resto_2
 
