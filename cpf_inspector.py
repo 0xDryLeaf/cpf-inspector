@@ -85,9 +85,10 @@ def processar_arquivo(filename, output_filename, show_valid_only, writer):
                             writer.writerow([cpf_formatado, 'VALIDO'])  # Escreve o CPF formatado como válido no arquivo de saída
                         elif output_filename:
                             print("[!] Erro: Não é possível escrever em um arquivo de saída.")
-                    elif not show_valid_only:
+                    else:
                         cpfs_invalidos += 1
-                        print(f"[{total_cpfs}]".ljust(5) + f" {(cpf).ljust(45)}" + "[" + colorama.Fore.RED + "X" + colorama.Style.RESET_ALL + "]")  # Exibe o CPF como inválido
+                        if not show_valid_only:
+                            print(f"[{total_cpfs}]".ljust(5) + f" {(cpf).ljust(45)}" + "[" + colorama.Fore.RED + "X" + colorama.Style.RESET_ALL + "]")  # Exibe o CPF como inválido
                         if writer:
                             writer.writerow([cpf, 'INVALIDO'])  # Escreve o CPF como inválido no arquivo de saída
                         elif output_filename:
