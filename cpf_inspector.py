@@ -1,25 +1,15 @@
 import argparse
 import csv
 import os
-try:
-    import colorama
-    colorama.init()
-except ModuleNotFoundError:  # pragma: no cover - fallback for minimal envs
-    class _Color:
-        def __getattr__(self, item):
-            return ""
-
-    colorama = type("colorama", (), {"Fore": _Color(), "Style": _Color()})()
-versao_atual = "v1.2.1"
 
 def banner():
-    print(colorama.Fore.CYAN +         r"   __________  ______   ____                           __            ")
-    print(colorama.Fore.CYAN +         r"  / ____/ __ \/ ____/  /  _/___  _________  ___  _____/ /_____  _____")
-    print(colorama.Fore.LIGHTBLUE_EX + r" / /   / /_/ / /_      / // __ \/ ___/ __ \/ _ \/ ___/ __/ __ \/ ___/")
-    print(colorama.Fore.LIGHTBLUE_EX + r"/ /___/ ____/ __/    _/ // / / (__  ) /_/ /  __/ /__/ /_/ /_/ / /    ")
-    print(colorama.Fore.BLUE +         r"\____/_/   /_/      /___/_/ /_/____/ .___/\___/\___/\__/\____/_/     ")
-    print(colorama.Fore.BLUE +         r"                                  /_/" + colorama.Fore.MAGENTA + f"  by:richardbrandao(git) {versao_atual}")
-    print(colorama.Style.RESET_ALL)
+    print(r"   __________  ______   ____                           __            ")
+    print(r"  / ____/ __ \/ ____/  /  _/___  _________  ___  _____/ /_____  _____")
+    print(r" / /   / /_/ / /_      / // __ \/ ___/ __ \/ _ \/ ___/ __/ __ \/ ___/")
+    print(r"/ /___/ ____/ __/    _/ // / / (__  ) /_/ /  __/ /__/ /_/ /_/ / /    ")
+    print(r"\____/_/   /_/      /___/_/ /_/____/ .___/\___/\___/\__/\____/_/     ")
+    print(r"                                  /_/                   by: 0xdryleaf")
+    print()
 
 def calcular_digitos_verificadores(cpf):
     cpf_numerico = "".join(filter(str.isdigit, cpf))  # Remove caracteres não numéricos do CPF
@@ -144,7 +134,7 @@ def main(filename, output_filename, show_valid_only, directory):
         print()
     else:
         print("Você deve fornecer um arquivo CSV ou TXT ou um diretório contendo arquivos CSV e/ou TXT para validar.")
-        print("Para mais informações, digite: " + colorama.Fore.LIGHTYELLOW_EX + "python cpf_inspector.py --help\n")
+        print("Para mais informações, digite: python cpf_inspector.py --help\n")
 
 if __name__ == "__main__":
     banner()
